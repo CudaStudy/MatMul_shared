@@ -61,6 +61,8 @@ __global__ void matMul_kernel_shared(float *_A, float *_B, float *_C)
     for (int k = 0; k < K_SIZE; k++)
         for (int i = 0; i < WORK_LOAD; i++)
             _C[index] += sA[row][k] * sB[k][col];
+
+    __syncthreads(); // wait until all thread operate the matrix
 }
 __global__ void matMul_kernel(float *_A, float *_B, float *_C)
 {
